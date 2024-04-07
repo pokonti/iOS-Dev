@@ -7,7 +7,7 @@
 // Model
 import Foundation
 
-struct MemoryGame<CardContent> {
+struct MemoryGame<CardContent> where CardContent: Equatable {
     private(set) var cards: Array<Card> //only looking at this variable is allowed //access control
     
     init(numberOfPairsOfCards: Int, cardContentFactory: (Int) -> CardContent) {
@@ -27,7 +27,9 @@ struct MemoryGame<CardContent> {
         cards.shuffle()
     }
     
-    struct Card {
+    struct Card: Equatable, Identifiable {
+        var id: ObjectIdentifier
+        
         var isFaceUp: Bool = true
         var isMatched: Bool = false
         let content: CardContent
